@@ -1,0 +1,25 @@
+mydata <- read.csv("data.csv", header = TRUE)
+dat <- data.frame(mydata)
+install.packages('devtools')
+library('devtools')
+install_github('philchalmers/mirt')
+library('mirt')
+mod <- mirt(dat, 1, itemtype='4PL')
+coef <- coef(mod, as.data.frame = TRUE, IRTpars=TRUE)
+write.csv(coef,"coef.csv", row.names =TRUE)
+scores <- fscores(mod)
+write.csv(scores,"scores.csv", row.names =TRUE)
+summary <- summary(mod)
+write.csv(summary,"summary.csv", row.names = TRUE)
+png(filename="name.png")
+plot(mod, type = 'trace', auto.key = F, main="Item Information Curves")
+dev.off()
+
+
+
+
+#dat <- expand.table(LSAT7)
+#write.csv(dat,"data3.csv", row.names = FALSE) <-----
+#write.csv(dat,"data2.csv", row.names = TRUE)
+
+#mydata <- read.csv("data3.csv", header = TRUE)
